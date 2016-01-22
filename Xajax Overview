@@ -1,0 +1,39 @@
+Xajax is made up of server side PHP scripts and client side Javascript scripts.
+
+The basic usage is:
+1. Include the Xajax core file.
+2. Instance the Xajax object.
+3. Tell Xajax where its Javascript files are located.
+4. Register the function/s you want to invoke from the browser.
+5. Create those functions.
+6. Call the Xajax request processing function.
+7. In the html head section of your page, invoke the xajax Javascript output
+   function to load the xajax Javascript into the browser.
+8. Call your registered function/s from browser events.
+
+Sample Page (Xajax Hello World):
+<?php
+include 'xajax/xajax_core/xajax.inc.php'; //Load the main Xajax php file
+$xajax = new xajax(); //Instance the Xajax class
+$xajax->configure('javascript URI', 'xajax/'); //Locate the XajaxJavascript
+$xajax->register(XAJAX_FUNCTION,'myfunc'); //Register an Xajax enabled function
+$xajax->processRequest(); //Call the Xajax processing engine function
+
+function myfunc()
+{
+  $objResponse = new xajaxResponse(); //Instance the Xajax response class
+  $objResponse->alert('Hello World'); //Invoke the response alert function
+  return $objResponse; //Return the response object to the processing engine
+}
+?>
+<!doctype html>
+<html>
+<head>
+  <title>Testing Xajax</title>
+  <?php $xajax->printJavascript(); //Load the Xajax Javascript ?>
+</head>
+<body>
+  <input typee="button" value="Click Me" onclick="xajax_myfunc()"/> <!-- Clicking the button calls myfunc -->
+</body>
+</html>
+
